@@ -18,14 +18,14 @@ const Cart = ({ cart, addToCart, removeFromCart, subTotal }) => {
                         <GrNext className='mx-2' />
                         {}
                         <Link href={`/${disableB}`}>
-                            <a className="
-                        w-1/3 py-3 font-medium tracking-wider title-font hover:text-sky-700 text-gray-400 cursor-pointer text-center md:text-xl text-sm">
+                            <a className={`
+                        w-1/3 py-3 font-medium tracking-wider title-font ${disableB==='checkout'?'hover:text-sky-700 cursor-pointer':'cursor-default'} text-gray-400 text-center md:text-xl text-sm`}>
                                 CHECKOUT DETAILS
                             </a>
                         </Link>
                         <GrNext className='mx-2' />
                         <a
-                            className="w-1/3 py-3 font-medium  tracking-wider text-gray-400 title-font text-center md:text-xl text-sm">
+                            className="w-1/3 py-3 font-medium cursor-default tracking-wider text-gray-400 title-font text-center md:text-xl text-sm">
                             ORDER COMPLETE
                         </a>
                     </div>
@@ -41,7 +41,6 @@ const Cart = ({ cart, addToCart, removeFromCart, subTotal }) => {
                                     </tr>
                                 </thead>
                                 {Object.keys(cart).map((k) => {
-                                    console.log(cart)
                                     return <tbody key={k}>
                                         <tr>
                                             <td className='py-4'>
@@ -59,7 +58,7 @@ const Cart = ({ cart, addToCart, removeFromCart, subTotal }) => {
                                             <td className='mt-4 font-bold text-gray-600 lg:table-cell hidden'> {cart[k].qty}
                                             </td>
                                             <td className='mt-2 font-bold text-gray-600 table-cell'>
-                                                ₹{subTotal}
+                                                ₹{cart[k].qty*cart[k].price}
                                             </td>
                                         </tr>
                                         <tr>

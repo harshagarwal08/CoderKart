@@ -32,7 +32,7 @@ const Checkout = ({ subTotal }) => {
                         </Link>
                         <GrNext className='mx-2' />
                         <a
-                            className="w-1/3 py-3 font-medium  tracking-wider text-gray-400 title-font text-center md:text-xl text-sm">
+                            className="w-1/3 py-3 font-medium  tracking-wider text-gray-400 title-font text-center md:text-xl text-sm cursor-default">
                             ORDER COMPLETE
                         </a>
                     </div>
@@ -67,7 +67,7 @@ const Checkout = ({ subTotal }) => {
                                 <div className='w-full mt-4'>
                                         <label htmlFor="address" className='font-semibold'>Street address&nbsp;
                                             <abbr title="required" className='text-red-800 border-none no-underline'>*</abbr></label>
-                                        <textarea rows="3" type="text" name="address" id="address" className='border-[1px] border-gray-300 shadow-md focus:border-sky-700 px-[0.75em] rounded-none h-[2.5em] outline-none w-full bg-white text-gray-900 mt-2 py-2 overflow-y-hidden resize-y' placeholder='House number and Street Name'/>
+                                        <textarea rows="2" type="text" name="address" id="address" className='border-[1px] border-gray-300 shadow-md focus:border-sky-700 px-[0.75em] rounded-none outline-none w-full bg-white text-gray-900 mt-2 py-2 overflow-y-hidden resize-y' placeholder='House number and Street Name'/>
                                 </div>
                                 <div className='w-full mt-4'>
                                         <label htmlFor="city" className='font-semibold'>Town / City&nbsp;
@@ -92,7 +92,9 @@ const Checkout = ({ subTotal }) => {
                             </div>
                         </div>
                     </div>
+                    <Link href={"/order"}>
                     <button className="mx-auto mt-2 text-white bg-sky-700 border-0 py-2 px-8 md:w-1/3 w-1/2 focus:outline-none hover:bg-sky-800 rounded lg:text-lg text-sm font-bold">PLACE ORDER</button>
+                    </Link>
                 </div>
             </div>
         </>

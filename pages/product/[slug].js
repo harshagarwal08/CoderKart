@@ -19,7 +19,7 @@ const Product = ({addToCart}) => {
     <section className="text-gray-600 body-font overflow-hidden">
       <div className="container px-5 py-12 mx-auto">
         <div className="lg:w-4/5 mx-auto flex flex-wrap">
-          <img alt="ecommerce" className="lg:w-1/2 w-full lg:h-auto object-contain object-center rounded max-h-[450px]" src="https://m.media-amazon.com/images/I/51sNJt1dcwL._UL1500_.jpg" />
+          <img alt="ecommerce" className="lg:w-1/2 w-full lg:h-auto object-contain object-center rounded max-h-[450px]" src="https://m.media-amazon.com/images/I/51sNJt1dcwL._UL1500_.jpg"/>
           <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
             <h2 className="text-sm title-font text-gray-500 tracking-widest">CoderKart</h2>
             <h1 className="text-gray-900 text-xl title-font font-medium mb-5">{`Wear The Code - It's not a BUG Tshirt`}</h1>
