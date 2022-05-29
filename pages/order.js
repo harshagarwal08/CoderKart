@@ -24,9 +24,9 @@ const Order = ({ cart, subTotal }) => {
                     </div>
                 {Object.keys(cart).length!==0 &&
                     <section className="text-gray-600 body-font overflow-hidden w-full">
-                        <div className="container px-5 py-16 mx-auto">
+                        <div className="container px-5 py-10 mx-auto">
                             <div className="xl:w-4/5 mx-auto flex xl:flex-row flex-col">
-                                <img alt="ecommerce" className="xl:w-1/2 w-full xl:mt-5 h-96 object-cover object-center rounded" src="https://dummyimage.com/400x400" />
+                                <img alt="ecommerce" className="xl:w-1/2 w-full h-48 lg:h-64 object-cover object-top rounded" src="/order.gif" />
                                 <div className="xl:w-1/2 w-full xl:pl-10 xl:pb-4 mt-6 xl:mt-0">
                                     {/* <h2 className="text-sm title-font text-sky-700 tracking-widest">coderkart.com</h2> */}
                                     <h1 className='text-center text-gray-900 text-xl title-font font-medium mb-2'>Order Summary (<span className='hover:text-sky-900 text-sky-700 cursor-pointer'>#33377</span>)</h1>
