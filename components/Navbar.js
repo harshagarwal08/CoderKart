@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { AiOutlineShoppingCart } from 'react-icons/ai'
+import { AiOutlineShoppingCart, AiOutlineUser } from 'react-icons/ai'
 import { VscChromeClose } from 'react-icons/vsc'
 import { ImBin } from 'react-icons/im'
 
@@ -23,7 +23,7 @@ const Navbar = ({ cart, addToCart, removeFromCart, subTotal }) => {
     const ref = useRef();
     return (
         <div className="flex flex-col md:flex-row justify-center items-center md:justify-start shadow-md py-2 sticky top-0 z-10 bg-white">
-            <div className="logo py-1 mr-8 ml-4">
+            <div className="logo md:mr-8 mr-auto ml-4 mb-1 md:mb-0 md:text-center text-left">
                 <Link href={"/"}><a>
                     <Image src="/logo.png" alt="" width={200} height={45} /></a>
                 </Link>
@@ -36,11 +36,13 @@ const Navbar = ({ cart, addToCart, removeFromCart, subTotal }) => {
                     <Link href={"/stickers"}><a> <li>Stickers</li></a></Link>
                 </ul>
             </div>
-            <div onClick={toggleCart} className="cart absolute right-0 top-6 mx-5 cursor-pointer">
+            <div onClick={toggleCart} className="cart absolute right-0 top-4 mx-5 cursor-pointer flex space-x-3 items-center">
+            <button className='bg-sky-700 text-white p-2 rounded-md text-sm'>Login</button>
+            <AiOutlineUser className='md:text-2xl text-lg hover:text-sky-700 hidden'/>
                 <span className="relative inline-block">
                 <AiOutlineShoppingCart className="text-xl md:text-2xl hover:text-sky-700" />
                 {Object.keys(cart).length !== 0 && 
-                    <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-sky-700 rounded-full">{Object.keys(cart).length}</span> }
+                    <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-sky-700 rounded-full">{Object.keys(cart).length}</span> }
                 </span>
             </div>
             <div ref={ref} className="sidecart absolute top-0 right-0 bg-gray-100 py-6 px-8 w-[360px] transition-transform translate-x-full z-20 h-screen">
