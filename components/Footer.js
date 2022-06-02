@@ -4,32 +4,39 @@ import Image from 'next/image'
 
 const Footer = () => {
     return (
-        <div>
-            <footer className="text-gray-600 body-font">
-                <div className="container px-16 py-20 mx-auto flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
+            <footer className="text-gray-600 body-font mt-auto">
+                <div className="container px-16 py-10 mx-auto flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
                     <div className="w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left">
                         <Link href={"/"}>
                             <a className="flex title-font font-medium items-center justify-center text-gray-900">
                                 <Image src="/logo.png" height={45} width={200} alt="" />
                             </a>
                         </Link>
-                        <p className="mt-2 text-sm text-gray-500 px-10">Coding apparels and accessories for all the geeks out there.</p>
+                        <p className="mt-2 text-sm text-gray-500 px-10">Coding related apparels and accessories for all the geeks out there.</p>
                     </div>
                     <div className="flex-grow flex flex-wrap md:pl-24 -mb-10 md:mt-0 mt-10 md:text-left text-center">
                         <div className="lg:w-1/3 md:w-1/2 w-full px-4">
-                            <h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">CATEGORIES</h2>
+                            <h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">SHOP</h2>
                             <nav className="list-none mb-10">
                                 <li>
-                                    <a className="text-gray-600 hover:text-gray-800">First Link</a>
+                                    <Link href={"/tshirts"}>
+                                    <a className="text-gray-600 hover:text-gray-800">Tshirts</a>
+                                    </Link>
                                 </li>
                                 <li>
-                                    <a className="text-gray-600 hover:text-gray-800">Second Link</a>
+                                    <Link href={"/hoodies"}>
+                                    <a className="text-gray-600 hover:text-gray-800">Hoodies</a>
+                                    </Link>
                                 </li>
                                 <li>
-                                    <a className="text-gray-600 hover:text-gray-800">Third Link</a>
+                                    <Link href={"/mugs"}>
+                                    <a className="text-gray-600 hover:text-gray-800">Mugs</a>
+                                    </Link>
                                 </li>
                                 <li>
-                                    <a className="text-gray-600 hover:text-gray-800">Fourth Link</a>
+                                    <Link href={"/stickers"}>
+                                    <a className="text-gray-600 hover:text-gray-800">Stickers</a>
+                                    </Link>
                                 </li>
                             </nav>
                         </div>
@@ -101,7 +108,6 @@ const Footer = () => {
                     </div>
                 </div>
             </footer>
-        </div>
     )
 }
 

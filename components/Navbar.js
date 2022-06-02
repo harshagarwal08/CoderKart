@@ -30,10 +30,10 @@ const Navbar = ({ cart, addToCart, removeFromCart, subTotal }) => {
             </div>
             <div className="nav">
                 <ul className="flex items-center space-x-3 font-bold">
-                    <Link href={"/tshirts"}><a><li>Tshirts</li></a></Link>
-                    <Link href={"/hoodies"}><a><li>Hoodies</li></a></Link>
-                    <Link href={"/mugs"}><a><li>Mugs</li></a></Link>
-                    <Link href={"/stickers"}><a> <li>Stickers</li></a></Link>
+                    <Link href={"/tshirts"}><a className="hover:text-sky-700"><li>Tshirts</li></a></Link>
+                    <Link href={"/hoodies"}><a className="hover:text-sky-700"><li>Hoodies</li></a></Link>
+                    <Link href={"/mugs"}><a className="hover:text-sky-700"><li>Mugs</li></a></Link>
+                    <Link href={"/stickers"}><a className="hover:text-sky-700"> <li>Stickers</li></a></Link>
                 </ul>
             </div>
             <div onClick={toggleCart} className="cart absolute right-0 top-4 mx-5 cursor-pointer flex space-x-3 items-center">
@@ -41,11 +41,11 @@ const Navbar = ({ cart, addToCart, removeFromCart, subTotal }) => {
             <AiOutlineUser className='md:text-2xl text-lg hover:text-sky-700 hidden'/>
                 <span className="relative inline-block">
                 <AiOutlineShoppingCart className="text-xl md:text-2xl hover:text-sky-700" />
-                {Object.keys(cart).length !== 0 && 
-                    <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-sky-700 rounded-full">{Object.keys(cart).length}</span> }
+                {Object.keys(cart)?.length !== 0 && 
+                    <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-sky-700 rounded-full">{Object.keys(cart)?.length}</span> }
                 </span>
             </div>
-            <div ref={ref} className="sidecart absolute top-0 right-0 bg-gray-100 py-6 px-8 w-[360px] transition-transform translate-x-full z-20 h-screen">
+            <div ref={ref} className="sidecart overflow-y-scroll absolute top-0 right-0 bg-gray-100 py-6 px-8 w-[360px] transition-transform translate-x-full z-20 h-screen">
                 <h3 className="font-bold text-md text-gray-600 text-center">CART</h3>
                 <div className="h-[2px] bg-gray-300 my-3 w-100 max-w-[30px] mx-auto text-center"></div>
                 <span onClick={toggleCart} className="absolute top-2 right-2 text-xl text-gray-600 hover:text-black">
@@ -53,23 +53,25 @@ const Navbar = ({ cart, addToCart, removeFromCart, subTotal }) => {
                 </span>
                 <div>
                     <ul className="overflow-y-auto">
-                        {Object.keys(cart).length === 0 && <div className='text-center my-4 font-semibold text-gray-500'>No products in the cart.</div>}
-                        {Object.keys(cart).map((k) => {
+                        {Object.keys(cart)?.length === 0 && <div className='text-center my-4 font-semibold text-gray-500'>No products in the cart.</div>}
+                        {Object.keys(cart)?.map((k) => {
                             return <li key={k} className="pt-3 pb-5 pl-2 pr-2 relative">
                                 <span onClick={() => removeFromCart(k)} className="absolute right-0 z-10">
                                     <ImBin className="text-gray-400 hover:text-black" />
                                 </span>
-                                <a href="" className="flex justify-between">
-                                    <img src="https://m.media-amazon.com/images/I/51sNJt1dcwL._UL1500_.jpg" alt="" className="w-[60px] h-[60px]" />
+                                <Link href={`/product/${k}`}>
+                                <a href="" className="flex">
+                                    <img src={cart[k].img} alt="" className="w-[60px] h-[60px] object-contain" />
                                     <span className="word-wrap max-w-[250px] ml-2 md:mr-0 mr-1">
                                         {cart[k].name} - {cart[k].variant}, {cart[k].size} </span>
                                 </a>
+                                </Link>
                                 <div className="text-right text-gray-400 text-xs">{cart[k].qty} x
                                     <span className="text-sm font-bold text-gray-700"> ₹{cart[k].price}</span></div>
                             </li>
                         })}
                     </ul>
-                    {(Object.keys(cart).length > 0) &&
+                    {(Object.keys(cart)?.length > 0) &&
                         <div>
                             <div className="text-center py-3 border-y-2 mt-5">
                                 <strong className="text-gray-500"> Subtotal: </strong><span className="text-gray-700 font-bold">₹{subTotal}</span>

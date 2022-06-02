@@ -93,7 +93,7 @@ const Checkout = ({ subTotal }) => {
                         </div>
                     </div>
                     <Link href={"/order"}>
-                    <button className="mx-auto mt-2 text-white bg-sky-700 border-0 py-2 px-8 md:w-1/3 w-1/2 focus:outline-none hover:bg-sky-800 rounded lg:text-lg text-sm font-bold">PLACE ORDER</button>
+                    <button className="mx-auto mt-2 text-white bg-sky-700 border-0 py-2 px-8 md:w-1/3 w-1/2 focus:outline-none hover:bg-sky-800 rounded lg:text-lg text-sm font-bold">PAY ₹{subTotal}</button>
                     </Link>
                 </div>
             </div>

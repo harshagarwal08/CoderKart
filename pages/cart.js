@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
 import { GrNext } from 'react-icons/gr'
 
-const Cart = ({ cart, addToCart, removeFromCart, subTotal }) => {
+const Cart = ({ cart, removeFromCart, subTotal }) => {
     let disableB = Object.keys(cart).length ? 'checkout' : 'cart';
     return (
         <>
@@ -47,9 +47,9 @@ const Cart = ({ cart, addToCart, removeFromCart, subTotal }) => {
                                                 <AiOutlineCloseCircle onClick={() => removeFromCart(k)} className='text-gray-300 text-2xl hover:text-gray-800 table-cell mr-2' />
                                             </td>
                                             <td className='table-cell'>
-                                                <img src="https://m.media-amazon.com/images/I/51sNJt1dcwL._UL1500_.jpg" alt="" className="w-[80px] h-[80px] mt-2" />
+                                                <img src={cart[k].img} alt="" className="hidden md:block w-[60px] h-[80px] mt-2" />
                                             </td>
-                                            <td className='text-left font-bold text-gray-600 break-words w-52 table-cell'>
+                                            <td className='text-left pl-2 font-bold text-gray-600 break-words w-52 table-cell'>
                                                 {cart[k].name} - {cart[k].size}, {cart[k].variant}
                                                 <div className="text-left text-gray-400 text-sm block lg:hidden">{cart[k].qty} x
                                                     <span className="text-sm font-bold text-gray-600"> ₹{cart[k].price}</span></div>
