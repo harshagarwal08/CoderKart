@@ -36,13 +36,15 @@ const Navbar = ({ cart, addToCart, removeFromCart, subTotal }) => {
                     <Link href={"/stickers"}><a className="hover:text-sky-700"> <li>Stickers</li></a></Link>
                 </ul>
             </div>
-            <div onClick={toggleCart} className="cart absolute right-0 top-4 mx-5 cursor-pointer flex space-x-3 items-center">
-            <button className='bg-sky-700 text-white p-2 rounded-md text-sm'>Login</button>
-            <AiOutlineUser className='md:text-2xl text-lg hover:text-sky-700 hidden'/>
-                <span className="relative inline-block">
-                <AiOutlineShoppingCart className="text-xl md:text-2xl hover:text-sky-700" />
-                {Object.keys(cart)?.length !== 0 && 
-                    <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-sky-700 rounded-full">{Object.keys(cart)?.length}</span> }
+            <div className="cart absolute right-0 top-4 mx-5 cursor-pointer flex space-x-3 items-center">
+                <Link href={"/login"}>
+                <button className='bg-sky-700 text-white p-2 rounded-md text-sm'>Login</button>
+                </Link>
+                <AiOutlineUser className='md:text-2xl text-lg hover:text-sky-700 hidden' />
+                <span className="relative inline-block" onClick={toggleCart}>
+                    <AiOutlineShoppingCart className="text-xl md:text-2xl hover:text-sky-700" />
+                    {Object.keys(cart)?.length !== 0 &&
+                        <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-sky-700 rounded-full">{Object.keys(cart)?.length}</span>}
                 </span>
             </div>
             <div ref={ref} className="sidecart overflow-y-scroll absolute top-0 right-0 bg-gray-100 py-6 px-8 w-[360px] transition-transform translate-x-full z-20 h-screen">
@@ -60,11 +62,11 @@ const Navbar = ({ cart, addToCart, removeFromCart, subTotal }) => {
                                     <ImBin className="text-gray-400 hover:text-black" />
                                 </span>
                                 <Link href={`/product/${k}`}>
-                                <a href="" className="flex">
-                                    <img src={cart[k].img} alt="" className="w-[60px] h-[60px] object-contain" />
-                                    <span className="word-wrap max-w-[250px] ml-2 md:mr-0 mr-1">
-                                        {cart[k].name} - {cart[k].variant}, {cart[k].size} </span>
-                                </a>
+                                    <a href="" className="flex">
+                                        <img src={cart[k].img} alt="" className="w-[60px] h-[60px] object-contain" />
+                                        <span className="word-wrap max-w-[250px] ml-2 md:mr-0 mr-1">
+                                            {cart[k].name} - {cart[k].variant}, {cart[k].size} </span>
+                                    </a>
                                 </Link>
                                 <div className="text-right text-gray-400 text-xs">{cart[k].qty} x
                                     <span className="text-sm font-bold text-gray-700"> ₹{cart[k].price}</span></div>
