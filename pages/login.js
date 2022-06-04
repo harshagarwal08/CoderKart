@@ -27,7 +27,7 @@ const Login = () => {
         body: JSON.stringify(data),
     });
     let response = await res.json();
-    if(response.success==='true'){
+    if(response.success===true){
       localStorage.setItem('token', response.token)
       setEmail('')
       setPassword('')
@@ -35,7 +35,7 @@ const Login = () => {
     }
     else if(response.success==='false'){
       toast.error(response.error, {
-        position: "bottom-center",
+        position: "top-center",
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,

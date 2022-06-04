@@ -3,17 +3,41 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import {useRouter} from 'next/router'
 import { useState, useEffect } from 'react'
+import LoadingBar from 'react-top-loading-bar'
+
+import {toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter()
   const [cart, setCart] = useState({})
   const [subTotal, setSubTotal] = useState(0)
-
+  const [user, setUser] = useState({value:null})
+  const [key, setKey] = useState(0)
+  const [progress, setProgress] = useState(0)
+  useEffect(()=>{
+    router.events.on('routeChangeStart', ()=>{
+      setProgress(40);
+    })
+    router.events.on('routeChangeComplete', ()=>{
+      setProgress(100);
+    })
+    const token = localStorage.getItem('token')
+    if(token){
+      setUser({value:token})
+      setKey(Math.random())
+    }
+  },[router.query, router.events])
   useEffect(() => {
         setCart(JSON.parse(localStorage.getItem('cart')))
         setSubTotal(localStorage.getItem('cart-subT'))
   }, [subTotal])
 
+  const logout = () =>{
+    localStorage.removeItem('token');
+    setUser({value:null})
+    setKey(Math.random())
+  } 
   const saveCart = (newCart) => {
     let subT = 0;
     let keys = Object.keys(newCart);
@@ -39,6 +63,15 @@ function MyApp({ Component, pageProps }) {
     }
     setCart(newCart)
     saveCart(newCart)
+    toast.success('Item added to cart', {
+      position: "bottom-center",
+      autoClose: 1000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
   }
 
   const removeFromCart = (itemCode) => {
@@ -50,7 +83,8 @@ function MyApp({ Component, pageProps }) {
 
 
   return <div className='flex flex-col min-h-[100vh]'>
-    <Navbar cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} subTotal={subTotal} />
+    <LoadingBar color='#0369a1' progress={progress} onLoaderFinished={()=>setProgress(0)} waitingTime={400}/>
+    <Navbar key={key} logout={logout} user={user} cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} subTotal={subTotal}/>
     <Component cart={cart} addToCart={addToCart} buyNow={buyNow} removeFromCart={removeFromCart} subTotal={subTotal} {...pageProps} />
     <Footer/>
   </div>

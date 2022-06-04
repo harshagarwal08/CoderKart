@@ -1,23 +1,24 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { AiOutlineShoppingCart, AiOutlineUser } from 'react-icons/ai'
 import { VscChromeClose } from 'react-icons/vsc'
 import { ImBin } from 'react-icons/im'
 
-const Navbar = ({ cart, addToCart, removeFromCart, subTotal }) => {
+const Navbar = ({ logout, user, cart, addToCart, removeFromCart, subTotal }) => {
+    const [dropdown, setDropdown] = useState(false)
     const closeCart = () => {
-        ref.current.classList.remove('translate-x-0')
-        ref.current.classList.add('translate-x-full')
+        ref.current?.classList.remove('translate-x-0')
+        ref.current?.classList.add('translate-x-full')
     }
     const toggleCart = () => {
-        if (ref.current.classList.contains('translate-x-full')) {
-            ref.current.classList.remove('translate-x-full')
-            ref.current.classList.add('translate-x-0')
+        if (ref.current?.classList.contains('translate-x-full')) {
+            ref.current?.classList.remove('translate-x-full')
+            ref.current?.classList.add('translate-x-0')
         }
         else {
-            ref.current.classList.remove('translate-x-0')
-            ref.current.classList.add('translate-x-full')
+            ref.current?.classList.remove('translate-x-0')
+            ref.current?.classList.add('translate-x-full')
         }
     }
     const ref = useRef();
@@ -36,18 +37,29 @@ const Navbar = ({ cart, addToCart, removeFromCart, subTotal }) => {
                     <Link href={"/stickers"}><a className="hover:text-sky-700"> <li>Stickers</li></a></Link>
                 </ul>
             </div>
-            <div className="cart absolute right-0 top-4 mx-5 cursor-pointer flex space-x-3 items-center">
-                <Link href={"/login"}>
-                <button className='bg-sky-700 text-white p-2 rounded-md text-sm'>Login</button>
-                </Link>
-                <AiOutlineUser className='md:text-2xl text-lg hover:text-sky-700 hidden' />
+            <div className={`cart absolute right-0 ${user.value? 'top-5': 'top-4'} mx-5 cursor-pointer flex space-x-3 items-center`}>
+                <a onMouseOver={() => setDropdown(true)} onMouseLeave={() => setDropdown(false)}>
+                    {dropdown && <div onMouseOver={() => setDropdown(true)} onMouseLeave={() => setDropdown(false)} className="absolute right-9 bg-gray-50 top-6 rounded-md px-5 w-32">
+                        <ul className=''>
+                            <Link href={'/account'}><a><li className="py-1 pt-2 hover:text-sky-700 font-medium">Account</li></a></Link>
+                            <Link href={'/orders'}><a><li className="py-1 hover:text-sky-700 font-medium">Orders</li></a></Link>
+                            <li onClick={logout} className="py-1 hover:text-sky-700 font-medium pb-2">Logout</li>
+                        </ul>
+                    </div>}
+                    {user.value && <AiOutlineUser className='md:text-2xl text-lg hover:text-sky-700' />}
+                </a>
+                {!user.value &&
+                    <Link href={"/login"}>
+                        <button className='bg-sky-700 text-white p-2 rounded-md text-sm'>Login</button>
+                    </Link>
+                }
                 <span className="relative inline-block" onClick={toggleCart}>
                     <AiOutlineShoppingCart className="text-xl md:text-2xl hover:text-sky-700" />
                     {Object.keys(cart)?.length !== 0 &&
                         <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-sky-700 rounded-full">{Object.keys(cart)?.length}</span>}
                 </span>
             </div>
-            <div ref={ref} className="sidecart overflow-y-scroll absolute top-0 right-0 bg-gray-100 py-6 px-8 w-[360px] transition-transform translate-x-full z-20 h-screen">
+            <div ref={ref} className="sidecart absolute top-0 right-0 bg-gray-100 py-6 px-8 w-[360px] transition-transform translate-x-full z-20 h-[100vh]">
                 <h3 className="font-bold text-md text-gray-600 text-center">CART</h3>
                 <div className="h-[2px] bg-gray-300 my-3 w-100 max-w-[30px] mx-auto text-center"></div>
                 <span onClick={toggleCart} className="absolute top-2 right-2 text-xl text-gray-600 hover:text-black">
