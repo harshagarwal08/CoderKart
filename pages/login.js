@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ToastContainer, toast } from 'react-toastify';
@@ -8,6 +8,11 @@ const Login = () => {
   const router = useRouter()
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
+
+  useEffect(() => {
+    if(localStorage.getItem('token')) router.push('/')
+  }, [])
+  
   const handleChange = (e) => {
       if(e.target.name==='email'){
           setEmail(e.target.value)
@@ -31,7 +36,18 @@ const Login = () => {
       localStorage.setItem('token', response.token)
       setEmail('')
       setPassword('')
-      router.push('/')
+      toast.success('You are successfully logged in!', {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
+        setTimeout(()=>{
+          router.push('/')
+        }, 1000);
     }
     else if(response.success==='false'){
       toast.error(response.error, {
@@ -80,11 +96,6 @@ pauseOnHover
       </div>
 
       <div className="flex items-center justify-between">
-        <div className="flex items-center">
-          <input id="remember-me" name="remember-me" type="checkbox" className="h-4 w-4 text-sky-700 focus:ring-sky-500 border-gray-300 rounded"/>
-          <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900"> Remember me </label>
-        </div>
-
         <div className="text-sm">
           <a href="#" className="font-medium text-sky-700 hover:text-sky-500"> Forgot your password? </a>
         </div>

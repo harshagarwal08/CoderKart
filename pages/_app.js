@@ -5,7 +5,7 @@ import {useRouter} from 'next/router'
 import { useState, useEffect } from 'react'
 import LoadingBar from 'react-top-loading-bar'
 
-import {toast } from 'react-toastify';
+import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function MyApp({ Component, pageProps }) {
@@ -37,6 +37,7 @@ function MyApp({ Component, pageProps }) {
     localStorage.removeItem('token');
     setUser({value:null})
     setKey(Math.random())
+    router.push('/')
   } 
   const saveCart = (newCart) => {
     let subT = 0;
