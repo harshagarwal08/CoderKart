@@ -38,7 +38,7 @@ const Navbar = ({ logout, user, cart, addToCart, removeFromCart, subTotal }) => 
                 </ul>
             </div>
             <div className={`cart absolute right-0 ${user.value? 'top-5': 'top-4'} mx-5 cursor-pointer flex space-x-3 items-center`}>
-                <a onMouseOver={() => setDropdown(true)} onMouseLeave={() => setDropdown(false)}>
+                <span onMouseOver={() => setDropdown(true)} onMouseLeave={() => setDropdown(false)}>
                     {dropdown && <div onMouseOver={() => setDropdown(true)} onMouseLeave={() => setDropdown(false)} className="absolute right-9 bg-white shadow-md border top-6 rounded-md px-5 w-32">
                         <ul className=''>
                             <Link href={'/account'}><a><li className="py-1 pt-2 hover:text-sky-700 font-medium">Account</li></a></Link>
@@ -47,7 +47,7 @@ const Navbar = ({ logout, user, cart, addToCart, removeFromCart, subTotal }) => 
                         </ul>
                     </div>}
                     {user.value && <AiOutlineUser className='md:text-2xl text-lg hover:text-sky-700' />}
-                </a>
+                </span>
                 {!user.value &&
                     <Link href={"/login"}>
                         <button className='bg-sky-700 text-white p-2 rounded-md text-sm'>Login</button>

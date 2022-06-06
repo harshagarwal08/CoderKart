@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps }) {
   const [cart, setCart] = useState({})
   const [subTotal, setSubTotal] = useState(0)
   const [user, setUser] = useState({value:null})
-  const [key, setKey] = useState(0)
+  const [key, setKey] = useState()
   const [progress, setProgress] = useState(0)
   useEffect(()=>{
     router.events.on('routeChangeStart', ()=>{
@@ -85,7 +85,7 @@ function MyApp({ Component, pageProps }) {
 
   return <div className='flex flex-col min-h-[100vh]'>
     <LoadingBar color='#0369a1' progress={progress} onLoaderFinished={()=>setProgress(0)} waitingTime={400}/>
-    <Navbar key={key} logout={logout} user={user} cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} subTotal={subTotal}/>
+    {key && <Navbar key={key} logout={logout} user={user} cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} subTotal={subTotal}/>}
     <Component cart={cart} addToCart={addToCart} buyNow={buyNow} removeFromCart={removeFromCart} subTotal={subTotal} {...pageProps} />
     <Footer/>
   </div>
