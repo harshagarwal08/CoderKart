@@ -1,16 +1,32 @@
-import React,{useEffect} from 'react'
-import Order from '../models/Order'
-import mongoose from 'mongoose'
-import {useRouter} from 'next/router'
+import React, { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 const Orders = () => {
     const router = useRouter()
+    const [orders, setOrders] = useState([])
     useEffect(() => {
-      if(!localStorage.getItem('token'))router.push('/')
+        const fetchOrder = async() => {
+            const result = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/myOrders`, {
+                method: 'POST',
+                body: JSON.stringify({token: localStorage.getItem('token')}),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            let res = await result.json()
+            setOrders(res.orders);
+        }
+        if(!localStorage.getItem('token')){
+            router.push('/')
+        }
+        else{
+            fetchOrder()
+        }
     }, [])
     return (
         <div>
-            <div className="container w-4/5 mx-auto">
+            <div className="container xl:w-2/3 mx-auto w-full">
                 <div className="flex flex-col">
                     <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
@@ -20,56 +36,35 @@ const Orders = () => {
                                     <thead className="bg-white border-b">
                                         <tr>
                                             <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                                #
+                                                Order Id
                                             </th>
                                             <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                                First
+                                                Amount
                                             </th>
                                             <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                                Last
+                                                Order Status
                                             </th>
-                                            <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                                Handle
-                                            </th>
+                                            {/* <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                                Details
+                                            </th> */}
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">1</td>
-                                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                                Mark
-                                            </td>
-                                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                                Otto
-                                            </td>
-                                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                                @mdo
-                                            </td>
-                                        </tr>
-                                        <tr className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">2</td>
-                                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                                Jacob
-                                            </td>
-                                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                                Thornton
-                                            </td>
-                                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                                @fat
-                                            </td>
-                                        </tr>
-                                        <tr className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">3</td>
-                                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                                Larry
-                                            </td>
-                                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                                Wild
-                                            </td>
-                                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                                @twitter
-                                            </td>
-                                        </tr>
+                                        {orders.map(item=>{
+                                             return <Link href={`/orderDetails?id=${item.orderId}`} key={item._id}>
+                                             <tr className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100 cursor-pointer">
+                                              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 text-left">{item.orderId}</td>
+                                              <td className="text-sm text-gray-900 font-medium px-6 py-4 whitespace-nowrap text-left">
+                                                  {item.amount}
+                                              </td>
+                                              <td className="text-sm text-gray-900 font-medium px-6 py-4 whitespace-nowrap text-left">
+                                                  {item.status}
+                                              </td>
+                                              {/* <td className="text-sm text-gray-900 font-medium px-6 py-4 whitespace-nowrap">
+                                              </td> */}
+                                          </tr>
+                                              </Link>
+                                        })}
                                     </tbody>
                                 </table>
                             </div>
@@ -80,13 +75,5 @@ const Orders = () => {
         </div>
     )
 }
-export async function getServerSideProps(context) {
-    if (!mongoose.connections[0].readyState) {
-      await mongoose.connect(process.env.MONGO_URI)
-    }
-    let orders = await Order.find({})
-    return {
-      props: { orders: JSON.parse(JSON.stringify(orders))}
-    }
-  }
+
 export default Orders

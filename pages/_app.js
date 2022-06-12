@@ -25,8 +25,8 @@ function MyApp({ Component, pageProps }) {
     const token = localStorage.getItem('token')
     if(token){
       setUser({value:token})
-      setKey(Math.random())
     }
+    setKey(Math.random())
   },[router.query, router.events])
   useEffect(() => {
         setCart(JSON.parse(localStorage.getItem('cart')))
@@ -50,7 +50,8 @@ function MyApp({ Component, pageProps }) {
     localStorage.setItem('cart-subT', subT);
   }
   const buyNow = (itemCode, qty, price, name, size, variant, img) => {
-    let newCart = {itemCode: {qty:1, price, name, size, variant, img}}
+    let newCart = {}
+    newCart[itemCode] = {qty:1, price, name, size, variant, img}
     setCart(newCart)
     saveCart(newCart)
     router.push('/checkout')
@@ -85,7 +86,7 @@ function MyApp({ Component, pageProps }) {
 
   return <div className='flex flex-col min-h-[100vh]'>
     <LoadingBar color='#0369a1' progress={progress} onLoaderFinished={()=>setProgress(0)} waitingTime={400}/>
-    <Navbar key={key} logout={logout} user={user} cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} subTotal={subTotal}/>
+    {key && <Navbar key={key} logout={logout} user={user} cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} subTotal={subTotal}/>}
     <Component cart={cart} addToCart={addToCart} buyNow={buyNow} removeFromCart={removeFromCart} subTotal={subTotal} {...pageProps} />
     <Footer/>
   </div>
