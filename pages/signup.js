@@ -8,9 +8,9 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Signup = () => {
     const router = useRouter()
-    const [name, setName] = useState()
-    const [email, setEmail] = useState()
-    const [password, setPassword] = useState()
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
     useEffect(() => {
         if (localStorage.getItem('token')) router.push('/')
     }, [])
