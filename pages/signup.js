@@ -12,8 +12,8 @@ const Signup = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     useEffect(() => {
-        if (localStorage.getItem('token')) router.push('/')
-    }, [])
+        if (localStorage.getItem('myUser')) router.push('/')
+    })
     const handleChange = (e) => {
         if (e.target.name === 'name') {
             setName(e.target.value)
@@ -37,7 +37,7 @@ const Signup = () => {
         });
         let response = await res.json();
         if(response.success===true){
-            localStorage.setItem('token', response.token);
+            localStorage.setItem('myUser', {token: response.token, email: email});
             setTimeout(()=>{
                 router.replace('/')
               }, 1000);

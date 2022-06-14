@@ -1,13 +1,15 @@
-import React, { useState } from 'react'
+/* eslint-disable @next/next/no-img-element */
+import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import mongoose from 'mongoose'
 import Product from '../../models/Product'
+import Error from 'next/error'
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const Item = ({ addToCart, buyNow, product, variants }) => {
+const Item = ({ addToCart, buyNow, product, variants, error}) => {
   const router = useRouter();
   const { slug } = router.query
   const [pin, setPin] = useState()
@@ -15,7 +17,7 @@ const Item = ({ addToCart, buyNow, product, variants }) => {
   const checkServiceability = async () => {
     let pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincode`)
     let pinJson = await pins.json()
-    if (Object.keys(pinJson).includes(pin)){
+    if (Object.keys(pinJson).includes(pin)) {
       setService(true);
       toast.success('Yay! Your pincode is serviceable.', {
         position: "bottom-center",
@@ -25,7 +27,7 @@ const Item = ({ addToCart, buyNow, product, variants }) => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        });
+      });
     }
     else {
       setService(false)
@@ -37,17 +39,28 @@ const Item = ({ addToCart, buyNow, product, variants }) => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        });
+      });
     };
   }
   const onChangePin = (e) => {
     setPin(e.target.value)
   }
-  const [color, setColor] = useState(product.color)
-  const [size, setSize] = useState(product.size)
+  const [color, setColor] = useState()
+  const [size, setSize] = useState()
+  useEffect(() => {
+    if(!error){
+      setColor(product?.color)
+      setSize(product?.size)
+    }
+  }, [router.query])
+
   const refreshVariants = (newColor, newSize) => {
     let url = `${process.env.NEXT_PUBLIC_HOST}/product/${variants[newColor][newSize]['slug']}`
-    window.location = url
+    router.push(url);
+  }
+  
+  if(error == 404){
+    return <Error statusCode={404}/>
   }
   return (
     <section className="text-gray-600 body-font overflow-hidden">
@@ -64,11 +77,12 @@ const Item = ({ addToCart, buyNow, product, variants }) => {
       />
       <div className="container px-5 py-12 mx-auto">
         <div className="lg:w-4/5 mx-auto flex flex-wrap">
-          <img alt="ecommerce" className="lg:w-1/2 w-full lg:h-auto object-contain object-center rounded max-h-[450px]" src={product.img} />
+          <img alt="ecommerce" className="lg:w-1/2 w-full lg:h-auto object-contain object-center rounded max-h-[450px]" src={product?.img} />
           <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
             <h2 className="text-sm title-font text-gray-500 tracking-widest">CoderKart</h2>
-            <h1 className="text-gray-900 text-xl title-font font-medium mb-5">{product.title} ({product.size}/{product.color})</h1>
-            <span className="title-font font-bold text-xl text-gray-900"> <s className='text-gray-400 font-semibold'>₹{product.price+200}</s> ₹{product.price}</span>
+            <h1 className="text-gray-900 text-xl title-font font-medium mb-5">{product?.title} ({product?.size}/{product?.color})</h1>
+            {product?.availableQty <= 0 ? <span className="title-font font-bold text-xl text-red-900">Out of Stock!</span> :
+              <span className="title-font font-bold text-xl text-gray-900"> <s className='text-gray-400 font-semibold'>₹{product?.price + 200}</s> ₹{product?.price}</span>}
             <ul className='list-disc leading-relaxed mt-5 ml-5'>
               <li><strong className='text-gray-500'>Material/ Fabric</strong>: 100% Cotton, Bio-Wash</li>
               <li><strong className='text-gray-500'>Size &amp; Fit</strong>:&nbsp;This brand runs true to size. To ensure the best fit, we suggest consulting the size chart.</li>
@@ -102,11 +116,11 @@ const Item = ({ addToCart, buyNow, product, variants }) => {
                   <span className="mr-3">Size</span>
                   <div className="relative">
                     <select value={size} onChange={(e) => refreshVariants(color, e.target.value)} className="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-sky-200 focus:border-sky-700 text-base pl-3 pr-10">
-                      {Object.keys(variants[color]).includes('S') && <option value={'S'}>S</option>}
-                      {Object.keys(variants[color]).includes('M') && <option value={'M'}>M</option>}
-                      {Object.keys(variants[color]).includes('L') && <option value={'L'}>L</option>}
-                      {Object.keys(variants[color]).includes('XL') && <option value={'XL'}>XL</option>}
-                      {Object.keys(variants[color]).includes('XXL') && <option value={'XXL'}>XXL</option>}
+                      {color && Object.keys(variants[color]).includes('S') && <option value={'S'}>S</option>}
+                      {color && Object.keys(variants[color]).includes('M') && <option value={'M'}>M</option>}
+                      {color && Object.keys(variants[color]).includes('L') && <option value={'L'}>L</option>}
+                      {color && Object.keys(variants[color]).includes('XL') && <option value={'XL'}>XL</option>}
+                      {color && Object.keys(variants[color]).includes('XXL') && <option value={'XXL'}>XXL</option>}
 
                     </select>
                     <span className="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
@@ -132,9 +146,9 @@ const Item = ({ addToCart, buyNow, product, variants }) => {
               </div>
             </div>
             <div className="flex justify-center md:justify-start mt-10">
-              <button onClick={() => addToCart(slug, 1, product.price, product.title, product.size, product.color, product.img)} className="flex text-white bg-sky-700 border-0 py-2 px-6 focus:outline-none hover:bg-sky-800 rounded">Add to Cart</button>
+              <button disabled={product?.availableQty <= 0} onClick={() => addToCart(slug, 1, product?.price, product?.title, product?.size, product?.color, product?.img)} className="flex text-white bg-sky-700 border-0 py-2 px-6 focus:outline-none hover:bg-sky-800 rounded disabled:bg-sky-300">Add to Cart</button>
               <Link href={"/checkout"}>
-                <button onClick={() => buyNow(slug, 1, product.price, product.title, product.size, product.color, product.img)} className="ml-3 text-white bg-orange-700  border-0 py-2 px-6 focus:outline-none hover:bg-orange-800 rounded">Buy Now</button>
+                <button disabled={product?.availableQty <= 0} onClick={() => buyNow(slug, 1, product?.price, product?.title, product?.size, product?.color, product?.img)} className="ml-3 text-white bg-orange-700  border-0 py-2 px-6 focus:outline-none hover:bg-orange-800 rounded disabled:bg-sky-300">Buy Now</button>
               </Link>
             </div>
           </div>
@@ -147,8 +161,12 @@ export async function getServerSideProps(context) {
   if (!mongoose.connections[0].readyState) {
     await mongoose.connect(process.env.MONGO_URI)
   }
+  let error = null;
   let product = await Product.findOne({ slug: context.query.slug })
-  let variants = await Product.find({ title: product.title, category: product.category })
+  if(product==null){
+    return {props: {error: 404}}
+  }
+  let variants = await Product.find({ title: product?.title, category: product?.category })
   let colorSizeSlug = {}
   for (let item of variants) {
     if (Object.keys(colorSizeSlug).includes(item.color)) {
@@ -161,7 +179,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { product: JSON.parse(JSON.stringify(product)), variants: JSON.parse(JSON.stringify(colorSizeSlug)) }
+    props: {error:null, product: JSON.parse(JSON.stringify(product)), variants: JSON.parse(JSON.stringify(colorSizeSlug)) }
   }
 }
 export default Item

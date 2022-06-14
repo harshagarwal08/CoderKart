@@ -6,6 +6,7 @@ import { VscChromeClose } from 'react-icons/vsc'
 import { ImBin } from 'react-icons/im'
 
 const Navbar = ({ logout, user, cart, addToCart, removeFromCart, subTotal }) => {
+    if(cart===null) cart = {};
     const [dropdown, setDropdown] = useState(false)
     const closeCart = () => {
         ref.current?.classList.remove('translate-x-0')

@@ -4,6 +4,12 @@ import Order from '../../models/Order'
 
 const handler = async (req, res) => {
     if(req.method==='POST'){
+      
+      //check if user clears cart and then try to pay
+      //check if the cart items prices are not tampered
+      //check if the cart items are not out of stock
+      //check if the details are valid
+
         try{
             const instance = new Razorpay({
               key_id: process.env.NEXT_PUBLIC_KEY,
@@ -14,7 +20,6 @@ const handler = async (req, res) => {
               currency: "INR",
             }
             const order = await instance.orders.create(options);
-            console.log(order)
             if(!order) return res.status(500).send('some error occured')
             let orderData = new Order({
               email: req.body.email,
@@ -23,12 +28,10 @@ const handler = async (req, res) => {
               amount: req.body.amount/100,
               products: req.body.cart
             })
-            console.log(orderData)
             await orderData.save()
             res.send(order);
           }
           catch(error){
-            console.log(error)
             res.status(500).send(error)
           }
     }
