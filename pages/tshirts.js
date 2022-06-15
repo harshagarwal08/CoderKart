@@ -5,12 +5,12 @@ import Product from '../models/Product'
 
 const Tshirts = ({products}) => {
   return (
-    <section className="text-gray-600 body-font">
+    <section className="text-gray-600 body-font xl:min-h-full min-h-screen">
       <div className="container 2xl:px-16 xl:px-8 lg:px-2 md:px-0 px-8 py-16 w-full mx-auto">
         <div className="flex flex-wrap justify-center">
           { Object.keys(products).map((item)=>{
           return  <Link key={products[item]._id} href={`/product/${products[item].slug}`}>
-          <div className="xl:w-1/5 lg:w-1/4 md:w-1/3 sm:w-1/2 w-full p-0 cursor-pointer shadow-xl m-4 transform transiti on duration-500 hover:scale-105 hover:shadow-2xl">
+          <div className="xl:w-1/5 lg:w-1/4 md:w-1/3 sm:w-1/2 w-full p-0 cursor-pointer shadow-xl m-4 transform transition duration-500 hover:scale-105 hover:shadow-2xl">
             <a className="block relative rounded overflow-hidden">
               <img alt="ecommerce" className="block h-[40vh] md:m-0 m-auto object-contain" src={products[item].img}/>
             </a>

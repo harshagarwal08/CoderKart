@@ -37,9 +37,9 @@ const Signup = () => {
         });
         let response = await res.json();
         if(response.success===true){
-            localStorage.setItem('myUser', {token: response.token, email: email});
+            localStorage.setItem('myUser', JSON.stringify({token: response.token, email: email}));
             setTimeout(()=>{
-                router.replace('/')
+                router.push('/')
               }, 1000);
         }
         else if (response.success === false) {
@@ -56,7 +56,7 @@ const Signup = () => {
         } 
     }
     return (
-        <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div className="xl:min-h-full min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
             <ToastContainer
                 position="top-left"
                 autoClose={1500}

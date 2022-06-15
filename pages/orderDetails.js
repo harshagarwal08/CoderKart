@@ -7,7 +7,7 @@ const orderDetails = ({ order }) => {
     return (
         <>
             {Object.keys(products).length !== 0 &&
-                <section className="text-gray-600 body-font overflow-hidden w-full my-10">
+                <section className="text-gray-600 body-font overflow-hidden w-full my-10 xl:min-h-full min-h-screen">
                     <div className="container px-5 py-10 mx-auto">
                         <div className="xl:w-1/2 xl:pl-10 xl:pb-4 mt-6 xl:mt-0 mx-auto">
                             {/* <h2 className="text-sm title-font text-sky-700 tracking-widest">coderkart.com</h2> */}

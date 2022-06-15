@@ -7,7 +7,7 @@ const MyOrder = ({ order}) => {
     const products = order[0].products
     return (
         <>
-            <div className="text-gray-600 mt-10 mb-20">
+            <div className="text-gray-600 mt-10 mb-20 xl:min-h-full min-h-screen">
                 <div className="container flex flex-col md:px-32 px-4 py-4 items-center">
                     <div className="flex items-center lg:w-3/5">
                         <a className="w-1/3 py-3 font-medium tracking-wider text-gray-400 title-font cursor-default text-center md:text-xl text-sm">
@@ -39,7 +39,7 @@ const MyOrder = ({ order}) => {
                                         {Object.keys(products).map((item) => {
                                             return <div className="flex border-t border-gray-200 py-2 justify-between items-center" key={item}>
                                                 <div className='flex flex-row items-center'>
-                                                    <img src={products[item].img} alt="" className="w-[60px] h-[60px] mt-2 mr-1" />
+                                                    <img src={products[item].img} alt="" className="w-[60px] h-[60px] mt-2 mr-2" />
                                                     <span className='word-break'>{products[item].name} - {products[item].size}, {products[item].variant}
                                                         <div className="text-left text-gray-400 text-sm">{products[item].qty} x
                                                             <span className="text-sm font-bold text-gray-600"> ₹{products[item].price}</span>

@@ -62,7 +62,7 @@ const Login = () => {
     }
   }
   return (
-<div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+<div className="xl:min-h-full min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
 <ToastContainer
 position="top-left"
 autoClose={1500}

@@ -4,10 +4,14 @@ const OrderSchema = new mongoose.Schema({
     email: {type: String, required: true},
     products: {type: Object, required: true},
     orderId: {type: String, required: true},
-    paymentInfo: {type: String, default: ''},
+    paymentId: {type: String, default: ''},
     address: {type: String, required: true},
+    pincode: {type: String, required: true},
+    phone: {type: String, required: true},
     amount: {type: Number, required:true},
-    status: {type: String, required: true, default: 'Pending'}
+    deliveryStatus: {type: String, default: 'Not Shipped'},
+    status: {type: String, required: true, default: 'Pending'},
+    fullName: {type: String, required: true}
 }, {timestamps: true});
 
 mongoose.models = {}

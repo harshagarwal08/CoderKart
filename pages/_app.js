@@ -57,6 +57,11 @@ function MyApp({ Component, pageProps }) {
     router.push('/checkout')
   }
 
+  const clearCart = () => {
+    setCart({});
+    saveCart({});
+  }
+
   const addToCart = (itemCode, qty, price, name, size, variant, img) => {
     let newCart = cart;
     if (itemCode in cart) newCart[itemCode].qty = cart[itemCode].qty + qty;
@@ -87,7 +92,7 @@ function MyApp({ Component, pageProps }) {
   return <div className='flex flex-col min-h-[100vh]'>
     <LoadingBar color='#0369a1' progress={progress} onLoaderFinished={()=>setProgress(0)} waitingTime={400}/>
     {key && <Navbar key={key} logout={logout} user={user} cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} subTotal={subTotal}/>}
-    <Component cart={cart} addToCart={addToCart} buyNow={buyNow} removeFromCart={removeFromCart} subTotal={subTotal} {...pageProps} />
+    <Component clearCart={clearCart} cart={cart} addToCart={addToCart} buyNow={buyNow} removeFromCart={removeFromCart} subTotal={subTotal} {...pageProps} />
     <Footer/>
   </div>
 }

@@ -5,7 +5,7 @@ import Product from '../models/Product'
 
 const Mugs = ({products}) => {
   return (
-    <section className="text-gray-600 body-font">
+    <section className="text-gray-600 body-font xl:min-h-full min-h-screen ">
       <div className="container 2xl:px-16 xl:px-8 lg:px-2 md:px-0 px-8 py-16 w-full mx-auto">
         <div className="flex flex-wrap justify-center">
           {Object.keys(products).length===0 && <p>All the mugs are currently out of stock. New stock coming soon. Stay Tuned!</p>}
