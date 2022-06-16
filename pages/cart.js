@@ -2,11 +2,15 @@ import React from 'react'
 import Link from 'next/link'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
 import { GrNext } from 'react-icons/gr'
+import Head from 'next/head'
 
 const Cart = ({ cart, removeFromCart, subTotal }) => {
     let disableB = Object.keys(cart).length ? 'checkout' : 'cart';
     return (
         <>
+        <Head>
+            <title>View Cart - CoderKart</title>
+        </Head>
             <div className="text-gray-600 mt-10 mb-20">
                 <div className="container flex flex-col md:px-32 px-4 py-4 items-center">
                     <div className="flex items-center lg:w-3/5">

@@ -1,14 +1,22 @@
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import {AiOutlineRight} from 'react-icons/ai'
+import Link from 'next/link'
+import Head from 'next/head'
 
 const Account = () => {
   const router = useRouter()
   useEffect(() => {
-    if (!localStorage.getItem('myUser')) router.push('/')
+    if (!localStorage.getItem('myUser')) {
+        window.location = `${process.env.NEXT_PUBLIC_HOST}`
+    }
   })
 
   return (
+    <>
+     <Head>
+      <title>About Us - CoderKart</title>
+    </Head>
     <section className="text-gray-600 body-font min-h-screen">
       <div className="container px-5 py-16 pb-10 mx-auto max-w-3xl">
         <div className="w-full mb-6 lg:text-left text-center">
@@ -22,9 +30,9 @@ const Account = () => {
             <div className="flex items-center mb-2">
               <div className="flex justify-between w-full">
                 <h2 className="text-gray-900 text-xl title-font font-medium">My Orders</h2>
-                <a className=" text-sky-700 inline-flex items-center">
+                <Link href={"/orders"}><a className=" text-sky-700 inline-flex items-center">
                 <span><AiOutlineRight className='text-lg'/></span>
-                </a>
+                </a></Link>
               </div>
             </div>
             <p className="leading-relaxed text-gray-500 text-sm">View, modify and track orders</p>
@@ -35,9 +43,11 @@ const Account = () => {
             <div className="flex items-center mb-2">
               <div className="flex justify-between w-full">
                 <h2 className="text-gray-900 text-xl title-font font-medium">My Profile</h2>
+                <Link href={"/profile"}>
                 <a className=" text-sky-700 inline-flex items-center">
                   <span><AiOutlineRight className='text-lg'/></span>
                 </a>
+                </Link>
               </div>
             </div>
             <p className="leading-relaxed text-gray-500 text-sm">Edit personal info, change password</p>
@@ -48,9 +58,11 @@ const Account = () => {
             <div className="flex items-center mb-2">
               <div className="flex justify-between w-full">
                 <h2 className="text-gray-900 text-xl title-font font-medium">My Address</h2>
+                <Link href={"/address"}>  
                 <a className=" text-sky-700 inline-flex items-center">
                 <span><AiOutlineRight className='text-lg'/></span>
                 </a>
+                </Link>
               </div>
             </div>
             <p className="leading-relaxed text-gray-500 text-sm">Edit your default address</p>
@@ -61,16 +73,18 @@ const Account = () => {
             <div className="flex items-center mb-2">
               <div className="flex justify-between w-full">
                 <h2 className="text-gray-900 text-xl title-font font-medium">Refer and Earn</h2>
-                <a className=" text-sky-700 inline-flex items-center">
+                <Link href={"/refer"}><a className=" text-sky-700 inline-flex items-center">
                 <span><AiOutlineRight className='text-lg'/></span>
-                </a>
+                </a></Link>
               </div>
             </div>
             <p className="leading-relaxed text-gray-500 text-sm">Invite your friends and earn rewards</p>
           </div>
         </div>
       </div>
-    </section >)
+    </section >
+    </>
+    )
 }
 
 export default Account

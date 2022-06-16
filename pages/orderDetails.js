@@ -12,7 +12,7 @@ const orderDetails = ({ order }) => {
                         <div className="xl:w-1/2 xl:pl-10 xl:pb-4 mt-6 xl:mt-0 mx-auto">
                             {/* <h2 className="text-sm title-font text-sky-700 tracking-widest">coderkart.com</h2> */}
                             <h1 className='text-center text-gray-900 text-xl title-font font-medium mb-2'>Order Details (<span className='hover:text-sky-900 text-sky-700 cursor-pointer'>#{order[0].orderId}</span>)</h1>
-                            <h2 className='text-center'>Order placed on {(new Date(order[0].createdAt)).toLocaleDateString()}</h2>
+                            <h2 className='text-center'>Order placed on {(new Date(order[0].createdAt)).toLocaleDateString('en-IN')}</h2>
                             <div className="flex my-4">
                                 <a className="flex-grow py-2 text-lg px-5 font-semibold text-gray-700">Product</a>
                                 <a className="py-2 text-lg px-1 font-semibold text-gray-700">Subtotal</a>

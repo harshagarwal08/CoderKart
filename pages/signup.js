@@ -4,16 +4,20 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Head from 'next/head';
 
 
 const Signup = () => {
+    useEffect(() => {
+        if (localStorage.getItem('myUser')) {
+            window.location = `${process.env.NEXT_PUBLIC_HOST}`
+        }
+    }, [])
+
     const router = useRouter()
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    useEffect(() => {
-        if (localStorage.getItem('myUser')) router.push('/')
-    })
     const handleChange = (e) => {
         if (e.target.name === 'name') {
             setName(e.target.value)
@@ -36,11 +40,11 @@ const Signup = () => {
             body: JSON.stringify(data),
         });
         let response = await res.json();
-        if(response.success===true){
-            localStorage.setItem('myUser', JSON.stringify({token: response.token, email: email}));
-            setTimeout(()=>{
+        if (response.success === true) {
+            localStorage.setItem('myUser', JSON.stringify({ token: response.token, email: email }));
+            setTimeout(() => {
                 router.push('/')
-              }, 1000);
+            }, 1000);
         }
         else if (response.success === false) {
             toast.error(response.error, {
@@ -53,9 +57,13 @@ const Signup = () => {
                 progress: undefined,
             });
             setEmail('')
-        } 
+        }
     }
     return (
+        <>
+        <Head>
+            <title>Signup - CoderKart</title>
+        </Head>
         <div className="xl:min-h-full min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
             <ToastContainer
                 position="top-left"
@@ -106,7 +114,8 @@ const Signup = () => {
                     </div>
                 </form>
             </div>
-        </div>)
+        </div>
+        </>)
 }
 
 export default Signup

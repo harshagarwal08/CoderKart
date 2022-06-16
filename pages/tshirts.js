@@ -2,9 +2,14 @@ import React from 'react'
 import Link from 'next/link'
 import mongoose from 'mongoose'
 import Product from '../models/Product'
+import Head from 'next/head'
 
 const Tshirts = ({products}) => {
   return (
+    <>
+    <Head>
+      <title>Tshirts - CoderKart</title>
+    </Head>
     <section className="text-gray-600 body-font xl:min-h-full min-h-screen">
       <div className="container 2xl:px-16 xl:px-8 lg:px-2 md:px-0 px-8 py-16 w-full mx-auto">
         <div className="flex flex-wrap justify-center">
@@ -25,6 +30,7 @@ const Tshirts = ({products}) => {
         </div>
       </div>
     </section>
+    </>
   )
 }
 

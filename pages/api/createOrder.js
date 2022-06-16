@@ -16,7 +16,7 @@ const handler = async (req, res) => {
     if(req.body.lname.length<=3){
       return res.status(200).json({ success: false, error: "Please enter your last name.", "reload": false })
     }
-    if(req.body.address.length<=5){
+    if(req.body.street.length<=5){
       return res.status(200).json({ success: false, error: "Please enter your address.", "reload": false })
     }
     if (req.body.pincode.length !== 6 || !Number.isInteger(Number(req.body.pincode))) {
@@ -58,17 +58,21 @@ const handler = async (req, res) => {
         currency: "INR",
       }
       const order = await instance.orders.create(options);
-      console.log(order);
       if (!order) return res.status(500).send('some error occured')
       let fullname = req.body.fname + ' ' + req.body.lname;
+      let fulladdress = {
+        street: req.body.street,
+        pincode: req.body.pincode,
+        city: req.body.city, 
+        state: req.body.state,
+      }
       let orderData = new Order({
         email: req.body.email,
         orderId: order.id,
-        address: req.body.address,
+        address: fulladdress,
         amount: req.body.subTotal,
         products: req.body.cart,
         phone: req.body.phone,
-        pincode: req.body.pincode,
         fullName: fullname
       })
       await orderData.save()

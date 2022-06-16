@@ -2,11 +2,15 @@ import React from 'react'
 import { GrNext } from 'react-icons/gr'
 import mongoose from 'mongoose'
 import Order from '../models/Order'
+import Head from 'next/head'
 
 const MyOrder = ({ order}) => {
     const products = order[0].products
     return (
         <>
+        <Head>
+            <title>Order - CoderKart</title>
+        </Head>
             <div className="text-gray-600 mt-10 mb-20 xl:min-h-full min-h-screen">
                 <div className="container flex flex-col md:px-32 px-4 py-4 items-center">
                     <div className="flex items-center lg:w-3/5">

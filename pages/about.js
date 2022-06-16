@@ -1,7 +1,12 @@
 import React from 'react'
+import Head from 'next/head'
 
 const About = () => {
   return (
+    <>
+    <Head>
+      <title>About Us - CoderKart</title>
+    </Head>
     <div className='container lg:py-20 py-8 xl:min-h-full min-h-screen flex flex-col justify-center'>
       <h1 className='font-bold text-3xl text-sky-700 text-center'>About CoderKart</h1>
       <p className='lg:px-64 md:px-36 px-10 mt-10 text-lg'>
@@ -9,6 +14,7 @@ const About = () => {
         <p className='lg:px-64 md:px-36 px-10 mt-5 text-lg'>
         If you are wondering why you should shop from CoderKart when there are multiple options available to you, our unique designs and quality products will answer your question.</p>
     </div>
+    </>
   )
 }
 

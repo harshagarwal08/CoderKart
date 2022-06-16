@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Head from 'next/head';
 
 const Login = () => {
   const router = useRouter()
@@ -10,7 +11,9 @@ const Login = () => {
   const [password, setPassword] = useState('')
 
   useEffect(() => {
-    if(localStorage.getItem('user')) router.push('/')
+      if (localStorage.getItem('myUser')) {
+        window.location = `${process.env.NEXT_PUBLIC_HOST}`
+    }
   })
   
   const handleChange = (e) => {
@@ -62,6 +65,10 @@ const Login = () => {
     }
   }
   return (
+    <>
+        <Head>
+            <title>Login - CoderKart</title>
+        </Head>
 <div className="xl:min-h-full min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
 <ToastContainer
 position="top-left"
@@ -113,7 +120,8 @@ pauseOnHover
       </div>
     </form>
   </div>
-</div>  )
+</div>  
+</>)
 }
 
 export default Login

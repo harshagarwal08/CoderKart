@@ -4,6 +4,7 @@ import { GrNext } from 'react-icons/gr'
 import { useRouter } from 'next/router'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Head from 'next/head'
 
 const Checkout = ({ clearCart, cart, subTotal }) => {
     const router = useRouter()
@@ -23,8 +24,26 @@ const Checkout = ({ clearCart, cart, subTotal }) => {
         if (user) {
             setUser(JSON.parse(localStorage.getItem('myUser')))
             setEmail(user.email)
+            fetchData();
         }
-    }, [])
+    }, [email])
+    const fetchData = async () => {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getUser`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email: email })
+        });
+        const data = await response.json();
+        setFName(data?.address?.name.split(' ')[0]);
+        setLName(data?.address?.name.split(' ')[1])
+        setAddress(data?.address?.street);
+        setPincode(data?.address?.pincode);
+        setCity(data?.address?.city);
+        setState(data?.address?.state);
+        setPhone(data?.address?.phone);
+    }
     const getPinCityState = async (e) => {
         if (e.target.name == 'pincode') setPincode(e.target.value);
         if (e.target.value.length == 6 && e.target.name == 'pincode') {
@@ -56,7 +75,7 @@ const Checkout = ({ clearCart, cart, subTotal }) => {
             try {
                 const result = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/createOrder`, {
                     method: 'POST',
-                    body: JSON.stringify({ amount: subTotal * 100, address: address, email: email, cart: cart, subTotal, pincode: pincode, phone: phone, fname: fname, lname: lname }),
+                    body: JSON.stringify({ amount: subTotal * 100, street: address, email: email, cart: cart, subTotal, pincode: pincode, phone: phone, fname: fname, lname: lname, city: city, state: state}),
                     headers: {
                         'Content-Type': 'application/json'
                     }
@@ -156,10 +175,13 @@ const Checkout = ({ clearCart, cart, subTotal }) => {
 
     return (
         <>
+        <Head>
+            <title>Checkout - CoderKart</title>
+        </Head>
             <div className="text-gray-600 mt-10 mb-20">
                 <ToastContainer
                     position="top-center"
-                    autoClose={5000}
+                    autoClose={4000}
                     hideProgressBar={false}
                     newestOnTop={false}
                     closeOnClick

@@ -18,7 +18,7 @@ const Orders = () => {
             setOrders(res.orders);
         }
         if(!localStorage.getItem('myUser')){
-        router.push('/')
+            window.location = `${process.env.NEXT_PUBLIC_HOST}`
         }
         else{
             fetchOrder()
@@ -57,7 +57,7 @@ const Orders = () => {
                                              <tr className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100 cursor-pointer">
                                               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-center">{item.orderId}</td>
                                               <td className="text-sm font-medium px-6 py-4 whitespace-nowrap text-center">
-                                              {(new Date(item.createdAt)).toLocaleDateString()}
+                                              {(new Date(item.createdAt)).toLocaleDateString('en-IN')}
                                               </td>
                                               <td className="text-sm font-medium px-6 py-4 whitespace-nowrap text-center">
                                                   {item.status}
